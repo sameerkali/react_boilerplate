@@ -1,0 +1,4 @@
+#!/bin/sh
+npx --no-install commitlint --edit "$1"
+
+# feat:, fix:, BREAKING CHANGE:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:
