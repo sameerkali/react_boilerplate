@@ -1,36 +1,59 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../StateManager/Store";
+import { increment, decrement, setNumber } from "./testSlice";
 
-const ContestCardtwothree = () => {
-  const [numberr, setNumberr] = useState('0');
-  const [number, setNumber] = useState('');
-  const [fetchedData, setFetchedData] = useState<any>(null);
+const ContestCardtwothree: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { number } = useAppSelector((state) => state.testslice);
 
-  const handleAddMeIn = () => {
-    setNumber(numberr);
+  const [inputValue, setInputValue] = useState<number>(0);
+
+  const handleIncrement = () => {
+    dispatch(increment());
   };
 
+  const handleDecrement = () => {
+    dispatch(decrement());
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(+event.target.value);
+  };
+
+  const handleLogInput = () => {
+    dispatch(setNumber({number:inputValue}))
+  };
 
   return (
-    <div>
-      <p>This is number: {number}</p>
-      <p>Call the API data here: {JSON.stringify(fetchedData)}</p>
-
-      <div style={{ boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)', backgroundColor: '#ffffff', paddingTop: '2%', width: '90%', alignSelf: 'center', borderRadius: 5, marginVertical: '2%' }}>
-        <input
-          style={{ padding: 12, color: '#1E3A8A' }}
-          type="number"
-          value={numberr}
-          onChange={e => setNumberr(e.target.value)}
-        />
-      </div>
-
-      <div style={{ flexDirection: 'row', alignItems: 'center', borderTopWidth: 1,  borderColor: '#E5E5E5' }}>
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="text-2xl font-bold mb-4">Test Component</h1>
+      <p className="text-xl mb-4">{number}</p>
+      <div className="space-x-4">
         <button
-          onClick={handleAddMeIn}
-          style={{ backgroundColor: '#1E3A8A', color: '#ffffff', padding: 10, borderRadius: 5 }}>
-          Add me in
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleDecrement}
+        >
+          Decrement
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleIncrement}
+        >
+          Increment
         </button>
       </div>
+      <input
+        type="number"
+        value={inputValue}
+        onChange={handleInputChange}
+        className="border border-gray-400 rounded-md p-2 mt-4"
+      />
+      <button
+        onClick={handleLogInput}
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        Log Input
+      </button>
     </div>
   );
 };

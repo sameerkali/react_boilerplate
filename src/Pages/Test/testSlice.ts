@@ -1,37 +1,31 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export const getData = createAsyncThunk('testSlice/getData', async () => {
-  const uri = 'https://jsonplaceholder.typicode.com/posts';
-  try {
-    const response = await fetch(uri);
-    const data = await response.json();
-    console.log('this is data',data, 'this is data');
-    return data; 
-  } catch (error) {
-    throw error; 
-  }
-});
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TestState {
-  number: string;
-  getData: any;
+  number: number;
 }
 
 const initialState: TestState = {
-  number: '',
-  getData: null,
+  number: 0
 };
 
 const testSlice = createSlice({
-  name: 'testSlice',
+  name: "testSlice",
   initialState,
   reducers: {
-    setNumber: (state, action: PayloadAction<{ number: string }>) => {
-      state.number = action.payload.number;
+    increment: (state) => {
+      state.number += 1;
+      console.log(state.number);
     },
+    decrement: (state) => {
+      state.number -= 1;
+      console.log(state.number);
+    },
+    setNumber: (state, action: PayloadAction<{ number: number }>) => {
+      state.number = action.payload.number;
+    }
   }
 });
 
-export const { setNumber } = testSlice.actions;
+export const { increment, decrement, setNumber } = testSlice.actions;
 
 export default testSlice.reducer;

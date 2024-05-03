@@ -1,11 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {useDispatch, useSelector} from 'react-redux';
 import type {TypedUseSelectorHook} from 'react-redux';
-import HomeSlice from '../screens/homeScreen/HomeSlice';
+import testSlice from '../Pages/Test/testSlice';
 
 export const store = configureStore({
   reducer: {
-    homeReducer: HomeSlice,
+    testslice: testSlice,
   },
 });
 
